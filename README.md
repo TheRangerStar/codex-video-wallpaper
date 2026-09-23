@@ -2,13 +2,13 @@
 
 把本地 MP4 变成 Codex 桌面客户端的动态背景，搭配透明毛玻璃、可调文字颜色和多视频轮播。
 
-**macOS · 本地视频 · Homebrew 安装 · MIT**
+**macOS · 本地视频 · Homebrew 安装 · 源码 MIT**
 
 这是社区制作的非官方工具，与 OpenAI 无隶属关系。仅支持视频，不支持图片。
 
-[![示例界面中的实际壁纸渲染](docs/demo.gif)](https://github.com/TheRangerStar/codex-video-wallpaper/releases/download/v0.1.0/demo.mp4)
+[![实际 Codex 客户端中的视频壁纸](docs/demo.gif)](https://github.com/TheRangerStar/codex-video-wallpaper/releases/download/v0.1.0/demo.mp4)
 
-> 演示使用虚构项目与原创抽象视频，加载本项目的实际壁纸渲染代码。它是隔离示例界面的录像，不是已登录客户端的录屏。点击预览可查看完整 MP4。
+> 实际 Codex 客户端录屏，约 86 秒，项目与账号信息已遮挡。为缩短演示，录制时临时让 8 个视频每段播放约 10 秒；正常使用时仍会完整播放每段视频再切换。GIF 为短精选，点击可查看完整 MP4；素材与遮挡说明见 [演示说明](docs/demo.md)。
 
 ## 安装
 
@@ -90,4 +90,4 @@ brew uninstall codex-wallpaper
 
 源代码无 npm 运行时依赖。`npm test` 执行独立单元和后台升级测试，不启动真实 Codex。面向用户的安装渠道只有 Homebrew。
 
-演示素材由本项目生成，制作说明见 [演示说明](docs/demo.md)。源码与原创演示素材使用 [MIT](LICENSE) 许可证；Codex 名称及客户端属于各自权利人。
+源码及原有原创抽象示例素材使用 [MIT](LICENSE) 许可证。实际录屏中的壁纸来自用户提供的本地视频，演示中的第三方内容权利归相应权利人，不属于本项目 MIT 授权范围；原视频文件不随工具安装包提供。Codex 名称及客户端属于各自权利人，详情见 [演示说明](docs/demo.md)。

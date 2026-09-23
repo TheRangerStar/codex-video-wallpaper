@@ -1,37 +1,44 @@
 {
-  "notice": "示例界面 · 实际壁纸渲染",
-  "privateData": false,
-  "backgroundSource": "原创数学渐变",
-  "durationSeconds": 21.566667,
+  "notice": "实际 Codex 客户端录屏，公开版已遮挡项目和账号信息",
+  "source": "用户提供的录屏，第三方壁纸内容不属于源码 MIT 授权范围",
+  "durationSeconds": 86.266667,
   "video": {
-    "width": 1280,
-    "height": 800,
+    "width": 1680,
+    "height": 1050,
     "fps": 30,
     "codec": "H.264",
     "audio": false
   },
+  "wallpaperCount": 8,
+  "recordingOnlySecondsPerVideo": 10,
+  "normalPlayback": "完整播放当前视频后切换",
+  "redactedRegions": [
+    "左侧项目、最近任务和账号",
+    "欢迎语中的项目名",
+    "输入框上方的项目名",
+    "建议任务文字"
+  ],
   "gif": {
     "durationSeconds": 8,
-    "width": 768,
-    "height": 480,
-    "fps": 10
+    "width": 640,
+    "height": 400,
+    "fps": 6
   },
   "files": [
     {
-      "name": "codex-video-wallpaper-demo.mp4",
-      "bytes": 3809418
+      "name": "demo.mp4",
+      "bytes": 40969958,
+      "sha256": "35b5c2e134f77b7378acd46456c463d47beff93a5e7695b9cd1b8df519533b8f"
     },
     {
-      "name": "preview.gif",
-      "bytes": 3313622
+      "name": "demo.gif",
+      "bytes": 3673584,
+      "sha256": "724b9c7cb1565aaa4ef04c6aec8cce3dd2aee11377cbed810bd2da73677cdbf6"
     },
     {
       "name": "cover.png",
-      "bytes": 412687
-    },
-    {
-      "name": "settings.png",
-      "bytes": 298155
+      "bytes": 1395335,
+      "sha256": "bb725c3adec5df7396c3db0166f5fed263d5df6f109b72c242b6fa7a8fe1d837"
     }
   ],
   "rendererSha256": "684c2f212c2e52a9f5944ab50a48c645e6f1a169189cea4d944c20cd3841250f"
