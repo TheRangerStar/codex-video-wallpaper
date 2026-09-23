@@ -1,0 +1,38 @@
+{
+  "notice": "示例界面 · 实际壁纸渲染",
+  "privateData": false,
+  "backgroundSource": "原创数学渐变",
+  "durationSeconds": 21.566667,
+  "video": {
+    "width": 1280,
+    "height": 800,
+    "fps": 30,
+    "codec": "H.264",
+    "audio": false
+  },
+  "gif": {
+    "durationSeconds": 8,
+    "width": 768,
+    "height": 480,
+    "fps": 10
+  },
+  "files": [
+    {
+      "name": "codex-video-wallpaper-demo.mp4",
+      "bytes": 3809418
+    },
+    {
+      "name": "preview.gif",
+      "bytes": 3313622
+    },
+    {
+      "name": "cover.png",
+      "bytes": 412687
+    },
+    {
+      "name": "settings.png",
+      "bytes": 298155
+    }
+  ],
+  "rendererSha256": "684c2f212c2e52a9f5944ab50a48c645e6f1a169189cea4d944c20cd3841250f"
+}

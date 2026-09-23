@@ -1,0 +1,10 @@
+{
+  "name": "codex-video-wallpaper",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local video wallpapers and frosted glass for the Codex desktop app on macOS",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": { "test": "node --test tests/*.test.mjs" }
+}

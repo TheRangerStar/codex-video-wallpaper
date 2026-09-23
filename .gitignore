@@ -1,0 +1,11 @@
+.DS_Store
+.wallpaper-*.json
+.wallpaper-*.tmp
+运行日志.txt
+node_modules/
+coverage/
+*.log
+demo/assets/
+demo/output/
+demo/recording-*/
+demo/verification.json

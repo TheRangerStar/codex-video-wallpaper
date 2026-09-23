@@ -1,0 +1,120 @@
+{
+  "date": "2026-09-23",
+  "source_sha256": {
+    "wallpaper.mjs": "1c3fb11b5512bb57f4c86a31b7918cb5ed1891900969185bbc9896e18df5ff9e",
+    "background.mjs": "2e33cca3725a2570bf13c0450aa1e4b54304355863f62d5d8065a92b137b68b5",
+    "renderer.js": "684c2f212c2e52a9f5944ab50a48c645e6f1a169189cea4d944c20cd3841250f",
+    "storage.mjs": "75301f191075d3218c809698fd49dac21a14d5549c5ef0fa20da65f2f17c0677",
+    "appearance.mjs": "8e0ec2ec1940f770bfc1e9b68592498ee12a4869f10e8b789e58ee53ad1bb0e4",
+    "console.mjs": "ed438cd37f26e4294450293307dea4fbb906dd2baa549fb56069bdd4feb7ad58"
+  },
+  "isolated_ui": [
+    {
+      "client_version": "26.915.31945",
+      "checks": 19,
+      "passed": true,
+      "actual_client_restarted": false
+    },
+    {
+      "client_version": "26.917.51856",
+      "checks": 19,
+      "passed": true,
+      "actual_client_restarted": false
+    }
+  ],
+  "isolated_transitions": [
+    {
+      "client_version": "26.915.31945",
+      "checks": 6,
+      "passed": true
+    },
+    {
+      "client_version": "26.917.51856",
+      "checks": 6,
+      "passed": true
+    }
+  ],
+  "playlist_and_resource_checks": 11,
+  "app_discovery_checks": 11,
+  "lifecycle": [
+    {
+      "name": "ordinary-exit",
+      "passed": true,
+      "launches": 0,
+      "discoveries": 1,
+      "installs": 1,
+      "playing": 1,
+      "removals": 0
+    },
+    {
+      "name": "temporary-disconnect",
+      "passed": true,
+      "launches": 0,
+      "discoveries": 2,
+      "installs": 1,
+      "playing": 5,
+      "removals": 1
+    },
+    {
+      "name": "version-update",
+      "passed": true,
+      "launches": 1,
+      "discoveries": 2,
+      "installs": 2,
+      "playing": 3,
+      "removals": 1
+    },
+    {
+      "name": "sleep-wake-retained-socket",
+      "passed": true,
+      "launches": 0,
+      "discoveries": 1,
+      "installs": 2,
+      "playing": 5,
+      "removals": 1
+    },
+    {
+      "name": "sleep-wake-closed-socket",
+      "passed": true,
+      "launches": 0,
+      "discoveries": 2,
+      "installs": 2,
+      "playing": 5,
+      "removals": 1
+    },
+    {
+      "name": "window-reload",
+      "passed": true,
+      "launches": 0,
+      "discoveries": 1,
+      "installs": 2,
+      "playing": 5,
+      "removals": 1
+    },
+    {
+      "name": "owner-conflict",
+      "passed": true,
+      "launches": 0,
+      "discoveries": 1,
+      "installs": 1,
+      "playing": 1,
+      "removals": 1
+    }
+  ],
+  "background_controller_regression": "passed after storage module integration",
+  "connection_menu_regression": "passed",
+  "live_read_only_status": {
+    "client_version": "26.917.51856",
+    "phase": "playing",
+    "connected": true,
+    "control_version": 6,
+    "heartbeat_fresh": true,
+    "error": null
+  },
+  "limits": [
+    "No real OS sleep was triggered",
+    "No real client was quit or restarted",
+    "No old-version client was installed or relaunched",
+    "UI fixtures are isolated and are not a full app end-to-end test"
+  ]
+}
