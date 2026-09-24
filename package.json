@@ -1,6 +1,6 @@
 {
   "name": "codex-video-wallpaper",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Local video wallpapers and frosted glass for the Codex desktop app on macOS",
   "type": "module",

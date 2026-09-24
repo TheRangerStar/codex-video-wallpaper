@@ -1,0 +1,44 @@
+{
+  "date": "2026-09-23",
+  "scope": "隔离 Chromium + 合成 MP4 + 本机客户端 CSS；非真实账号窗口视觉验收",
+  "renderer_sha256": "958905a07b5a084598cea78a4b03c7978b0a2f6826b82a2206c1e250cc9eb677",
+  "test_sha256": "da7f9c9af37b0a661bb6b86b090db2cb853351f63cd3f9cdef9442bf44d97b5f",
+  "ui_regression": [
+    {
+      "version": "26.915.31945",
+      "passed": 19
+    },
+    {
+      "version": "26.917.51856",
+      "passed": 19
+    },
+    {
+      "version": "26.917.71314",
+      "passed": 19
+    }
+  ],
+  "composer_regression": {
+    "versions": [
+      "26.917.51856",
+      "26.917.71314"
+    ],
+    "passed_per_version": 7,
+    "checks": [
+      "项目环境栏与输入框玻璃一致，主次文字对比度至少4.5",
+      "附件占位及文件名白底消除，文件名保持可读",
+      "预览图、删除按钮、区域外底色及对话框未改",
+      "预览和删除鼠标点击分别生效",
+      "动态重建项目栏与附件后样式生效",
+      "深色字在黑色背景上的玻璃对比度至少4.5",
+      "关闭完整恢复原始样式"
+    ],
+    "baseline_reproduced": true,
+    "baseline_failure": "旧渲染器的项目栏保持 rgb(227,227,227)，未沿用输入框的 rgba(12,15,20,0.7)"
+  },
+  "not_repeated": [
+    "连接与进程升级测试",
+    "视频过渡测试"
+  ],
+  "live_visual_acceptance": "用户已检查当前效果并接受；非全部真实页面验收",
+  "distribution": "修复包含于 0.1.1；Homebrew 分发"
+}

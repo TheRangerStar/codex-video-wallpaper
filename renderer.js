@@ -17,6 +17,7 @@
   const marked = new Set();
   const summaryPanel = '.rounded-3xl.bg-surface-elevated-secondary:has([data-slot^="thread-summary-panel-"])';
   const settingsPanel = '[class~="group/settings"]:not([role="dialog"] *)';
+  const composerUtility = '[data-composer-placement="home"][class*="_ComposerHomeUtilityBar_"]';
   const style = document.createElement('style');
   style.id = 'codex-local-video-style';
   // 窗口与工具栏不染色视频；来源面板、文件卡片只作局部模糊，不铺白底。
@@ -105,6 +106,19 @@
     html[${marker}] [data-composer-surface-variant="opaque"]:not([data-composer-drag-active]) {
       --composer-layout-surface-background:color-mix(in srgb, var(--color-surface) 32%, transparent)!important;
       --composer-layout-surface-backdrop-filter:blur(18px)!important;
+    }
+    /* 项目/环境栏可能位于输入框外的 rail，需独立玻璃层和文字配色。 */
+    html[${marker}] ${composerUtility} {
+      background:color-mix(in srgb, var(--color-surface) 32%, transparent)!important;
+      backdrop-filter:blur(18px);
+    }
+    /* 附件底板透出输入框玻璃；只移除 UI 底色，不改预览图片、点击层或删除按钮。 */
+    html[${marker}] [data-composer-surface-variant] [data-composer-attachments] :is(
+      .composer-attachment-surface.bg-surface-secondary,
+      .composer-attachment-surface.bg-primary-soft,
+      .composer-attachment-surface > .bg-surface,
+      .composer-attachment-surface [class~="bg-surface-secondary/92"]) {
+      background:transparent!important;
     }
     #codex-local-video-layer {
       position:fixed; inset:0; z-index:0; pointer-events:none!important;
@@ -228,6 +242,7 @@
     { name: 'settings', selector: settingsPanel },
     { name: 'sources', selector: summaryPanel },
     { name: 'composer', selector: '[data-composer-surface-variant]' },
+    { name: 'composerUtility', selector: composerUtility },
   ].map(zone => ({ ...zone, mode: null, pending: 0, luminance: null }));
   const colorTokens = {
     '--color-text': 'ink', '--color-text-emphasis': 'ink', '--color-text-prose': 'ink',
@@ -274,7 +289,7 @@
         const edge = brightText ? '#000d' : '#fffd';
         palette.shadow = `-1px 0 ${edge}, 1px 0 ${edge}, 0 -1px ${edge}, 0 1px ${edge}, ${palette.shadow}`;
       }
-      const readingPanel = ['settings', 'composer'].includes(zone.name);
+      const readingPanel = ['settings', 'composer', 'composerUtility'].includes(zone.name);
       const alpha = appearance && readingPanel ? readingAlpha(palette.subtle, brightText, appearance.glass) : appearance?.glass ?? 0;
       // 已有足够底色的文字无需厚阴影，避免细字看起来发虚。
       if (readingPanel && alpha && appearance?.shadow === 'soft') palette.shadow = 'none';
@@ -301,6 +316,9 @@
       html[${marker}] ${settingsPanel} {box-shadow:0 0 0 16px var(--codex-wallpaper-plate);}
       html[${marker}] [data-composer-surface-variant]:not([data-composer-drag-active]) {
         --composer-layout-surface-background:var(--codex-wallpaper-plate)!important;
+      }
+      html[${marker}] ${composerUtility} {
+        background:var(--codex-wallpaper-plate)!important;
       }`;
       if (appearance.glass > 0) {
         css += `html[${marker}] [data-app-shell-main-surface] :is(
