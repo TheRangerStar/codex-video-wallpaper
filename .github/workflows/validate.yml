@@ -1,0 +1,105 @@
+name: Validate source and release
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+  release:
+    types: [published, edited]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Published release tag to validate
+        required: true
+        default: v0.1.1
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  source:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag || github.ref }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Check package, CHANGELOG and tag versions
+        id: version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag || (github.ref_type == 'tag' && github.ref_name) || '' }}
+        run: |
+          python3 - <<'PY'
+          import json, os, re
+          from pathlib import Path
+
+          version = json.loads(Path("package.json").read_text())["version"]
+          if not re.fullmatch(r"\d+\.\d+\.\d+", version):
+              raise SystemExit(f"Unsupported release version: {version}")
+          headings = re.findall(r"^## (\d+\.\d+\.\d+)\s*$",
+                                Path("CHANGELOG.md").read_text(), re.M)
+          if not headings or headings[0] != version or headings.count(version) != 1:
+              raise SystemExit("First CHANGELOG version must equal package version exactly once")
+          tag = os.environ["RELEASE_TAG"]
+          if tag and tag != f"v{version}":
+              raise SystemExit(f"Tag {tag} does not match package/CHANGELOG {version}")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write(f"tag=v{version}\n")
+          print(f"Version OK: {version}" + (f", tag {tag}" if tag else ""))
+          PY
+      # There are no npm dependencies or lockfile; no install step is needed.
+      - run: npm test
+
+  release:
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    needs: source
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Verify uploaded archive, GitHub digest and SHA256SUMS
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          TAG: ${{ needs.source.outputs.tag }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, subprocess, tempfile
+          from pathlib import Path
+
+          repo, tag = os.environ["REPOSITORY"], os.environ["TAG"]
+          release = json.loads(subprocess.check_output(
+              ["gh", "api", f"repos/{repo}/releases/tags/{tag}"], text=True))
+          if release["tag_name"] != tag or release["draft"]:
+              raise SystemExit("Release tag mismatch or release is still a draft")
+          name = f"codex-video-wallpaper-{tag[1:]}.tar.gz"
+          assets = release["assets"]
+          for required in (name, "SHA256SUMS"):
+              if sum(a["name"] == required and a["state"] == "uploaded" for a in assets) != 1:
+                  raise SystemExit(f"Missing or ambiguous uploaded asset: {required}")
+          asset = next(a for a in assets if a["name"] == name)
+          expected_url = f"https://github.com/{repo}/releases/download/{tag}/{name}"
+          if asset["browser_download_url"] != expected_url:
+              raise SystemExit("Archive download URL mismatch")
+          with tempfile.TemporaryDirectory() as directory:
+              subprocess.run(["gh", "release", "download", tag, "--repo", repo,
+                              "--pattern", name, "--pattern", "SHA256SUMS",
+                              "--dir", directory], check=True)
+              archive = Path(directory, name)
+              digest = hashlib.sha256(archive.read_bytes()).hexdigest()
+              if archive.stat().st_size != asset["size"]:
+                  raise SystemExit("Archive size mismatch")
+              if asset.get("digest") != f"sha256:{digest}":
+                  raise SystemExit("Downloaded archive does not match GitHub SHA-256 digest")
+              expected = f"{digest}  {name}\n"
+              if Path(directory, "SHA256SUMS").read_bytes() != expected.encode():
+                  raise SystemExit("SHA256SUMS must contain exactly the archive SHA-256 and filename")
+              print(f"Release OK: {tag}, sha256:{digest}")
+          PY
